@@ -1,4 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="64" fill="#111827"/>
-  <text x="256" y="320" font-size="240" text-anchor="middle" fill="white">🎮</text>
+  <rect width="512" height="512" rx="96" fill="#111827"/>
+  <!-- 3x3 grid lines — well inset -->
+  <rect x="140" y="140" width="232" height="232" rx="8" fill="none" stroke="white" stroke-width="6"/>
+  <line x1="217" y1="140" x2="217" y2="372" stroke="white" stroke-width="3"/>
+  <line x1="295" y1="140" x2="295" y2="372" stroke="white" stroke-width="3"/>
+  <line x1="140" y1="217" x2="372" y2="217" stroke="white" stroke-width="3"/>
+  <line x1="140" y1="295" x2="372" y2="295" stroke="white" stroke-width="3"/>
+  <!-- Numbers -->
+  <text x="178" y="195" font-size="52" font-family="system-ui" text-anchor="middle" fill="#60a5fa" font-weight="bold">5</text>
+  <text x="256" y="195" font-size="52" font-family="system-ui" text-anchor="middle" fill="white" font-weight="bold">3</text>
+  <text x="334" y="273" font-size="52" font-family="system-ui" text-anchor="middle" fill="white" font-weight="bold">8</text>
+  <text x="178" y="350" font-size="52" font-family="system-ui" text-anchor="middle" fill="#60a5fa" font-weight="bold">1</text>
+  <text x="334" y="350" font-size="52" font-family="system-ui" text-anchor="middle" fill="white" font-weight="bold">7</text>
 </svg>
