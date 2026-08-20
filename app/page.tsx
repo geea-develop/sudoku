@@ -232,10 +232,20 @@ export default function Sudoku() {
         </div>
       )}
 
-      {/* Build tag */}
-      <span className="absolute bottom-2 text-gray-700 text-[10px]">
-        build {process.env.NEXT_PUBLIC_BUILD_ID?.slice(0, 7) || "local"} 🎯
-      </span>
+      {/* Build tag + Report Bug */}
+      <div className="absolute bottom-2 flex items-center gap-3">
+        <a
+          href="https://github.com/geea-develop/sudoku/issues/new?template=bug_report.yml"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-gray-500 hover:text-gray-300 text-xs underline"
+        >
+          Report Bug
+        </a>
+        <span className="text-gray-700 text-[10px]">
+          build {process.env.NEXT_PUBLIC_BUILD_ID?.slice(0, 7) || "local"} 🎯
+        </span>
+      </div>
     </div>
   );
 }
