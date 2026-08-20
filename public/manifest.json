@@ -1,6 +1,6 @@
 {
-  "name": "My Game",
-  "short_name": "Game",
+  "name": "Sudoku",
+  "short_name": "Sudoku",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#111827",

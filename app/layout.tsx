@@ -2,12 +2,12 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "My Game",
-  description: "A simple web game",
+  title: "Sudoku — Free Online Puzzle",
+  description: "Free Sudoku game — no ads, no sign-up, mobile-friendly",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "My Game",
+    title: "Sudoku",
   },
 };
 
