@@ -20,6 +20,7 @@ export default function Sudoku() {
   const [errors, setErrors] = useState<Set<string>>(new Set());
   const [won, setWon] = useState(false);
   const [generating, setGenerating] = useState(false);
+  const [helpEnabled, setHelpEnabled] = useState(true);
 
   const newGame = useCallback((diff: Difficulty) => {
     setGenerating(true);
@@ -69,7 +70,9 @@ export default function Sudoku() {
 
     if (num !== solution[row][col]) {
       newErrors.add(key);
-      playTone(200, 0.2, "sawtooth");
+      if (helpEnabled) {
+        playTone(200, 0.2, "sawtooth");
+      }
     } else {
       newErrors.delete(key);
       playTone(440 + num * 40, 0.1);
@@ -147,6 +150,18 @@ export default function Sudoku() {
             {d.charAt(0).toUpperCase() + d.slice(1)}
           </button>
         ))}
+        <button
+          onClick={() => setHelpEnabled((prev) => !prev)}
+          className={`px-3 py-1 rounded text-xs sm:text-sm font-medium transition-colors ${
+            helpEnabled
+              ? "bg-green-700 text-green-100 hover:bg-green-600"
+              : "bg-gray-700 text-gray-400 hover:bg-gray-600"
+          }`}
+          aria-label={helpEnabled ? "Disable help" : "Enable help"}
+          title={helpEnabled ? "Help: ON – errors are highlighted" : "Help: OFF – no error feedback"}
+        >
+          {helpEnabled ? "💡 Help" : "🚫 Help"}
+        </button>
       </div>
 
       {/* Board */}
@@ -185,7 +200,7 @@ export default function Sudoku() {
                   text-sm sm:text-lg font-semibold
                   transition-colors
                   ${bg} ${borderRight} ${borderBottom}
-                  ${isGiven ? "text-white" : hasError ? "text-red-400" : "text-blue-300"}
+                  ${isGiven ? "text-white" : hasError && helpEnabled ? "text-red-400" : "text-blue-300"}
                   ${!isGiven && !won ? "cursor-pointer" : ""}
                 `}
                 aria-label={`Cell row ${rowIdx + 1} column ${colIdx + 1}${cell ? ` value ${cell}` : " empty"}`}
@@ -221,13 +236,18 @@ export default function Sudoku() {
 
       {/* Win state */}
       {won && (
-        <div className="mt-4 text-center animate-bounce">
-          <p className="text-2xl font-bold text-yellow-400 mb-2">🎉 You solved it!</p>
+        <div className="mt-6 py-4 px-6 text-center rounded-xl bg-gray-800/80 border border-yellow-500/30">
+          <p className="text-2xl font-bold text-yellow-400 mb-1 animate-pulse">
+            🎉 Well done!
+          </p>
+          <p className="text-sm text-gray-300 mb-3">
+            You crushed the {difficulty} puzzle. Ready for another?
+          </p>
           <button
             onClick={() => newGame(difficulty)}
             className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors"
           >
-            New Game
+            Play Again
           </button>
         </div>
       )}
