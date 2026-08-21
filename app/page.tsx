@@ -152,15 +152,22 @@ export default function Sudoku() {
         ))}
         <button
           onClick={() => setHelpEnabled((prev) => !prev)}
-          className={`px-3 py-1 rounded text-xs sm:text-sm font-medium transition-colors ${
-            helpEnabled
-              ? "bg-green-700 text-green-100 hover:bg-green-600"
-              : "bg-gray-700 text-gray-400 hover:bg-gray-600"
-          }`}
+          className="flex items-center gap-2 px-3 py-1 rounded text-xs sm:text-sm font-medium text-gray-300"
           aria-label={helpEnabled ? "Disable help" : "Enable help"}
           title={helpEnabled ? "Help: ON – errors are highlighted" : "Help: OFF – no error feedback"}
         >
-          {helpEnabled ? "💡 Help" : "🚫 Help"}
+          <span>Help</span>
+          <span
+            className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+              helpEnabled ? "bg-green-600" : "bg-gray-600"
+            }`}
+          >
+            <span
+              className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform ${
+                helpEnabled ? "translate-x-[18px]" : "translate-x-[3px]"
+              }`}
+            />
+          </span>
         </button>
       </div>
 
