@@ -226,14 +226,14 @@ export default function Sudoku() {
             <button
               key={num}
               onClick={() => handleNumberInput(num)}
-              className="w-[32px] h-[40px] sm:w-[40px] sm:h-[48px] bg-gray-700 hover:bg-gray-600 active:bg-gray-500 text-white font-bold rounded text-sm sm:text-lg transition-colors"
+              className="w-[40px] h-[48px] sm:w-[48px] sm:h-[56px] bg-gray-700 hover:bg-gray-600 active:bg-gray-500 text-white font-bold rounded text-sm sm:text-lg transition-colors"
             >
               {num}
             </button>
           ))}
           <button
             onClick={handleErase}
-            className="w-[32px] h-[40px] sm:w-[40px] sm:h-[48px] bg-red-900 hover:bg-red-800 active:bg-red-700 text-white font-bold rounded text-sm sm:text-lg transition-colors"
+            className="w-[40px] h-[48px] sm:w-[48px] sm:h-[56px] bg-red-900 hover:bg-red-800 active:bg-red-700 text-white font-bold rounded text-sm sm:text-lg transition-colors"
             aria-label="Erase"
           >
             ✕
