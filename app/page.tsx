@@ -21,6 +21,7 @@ export default function Sudoku() {
   const [won, setWon] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [helpEnabled, setHelpEnabled] = useState(true);
+  const [darkMode, setDarkMode] = useState(true);
 
   const newGame = useCallback((diff: Difficulty) => {
     setGenerating(true);
@@ -41,6 +42,27 @@ export default function Sudoku() {
   useEffect(() => {
     newGame("easy");
   }, [newGame]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("darkMode");
+    if (stored !== null) {
+      setDarkMode(stored === "true");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    localStorage.setItem("darkMode", String(darkMode));
+  }, [darkMode]);
+
+  const toggleDarkMode = () => {
+    setDarkMode((prev) => !prev);
+    hapticTap();
+  };
 
   const handleCellClick = (row: number, col: number) => {
     if (won) return;
@@ -124,16 +146,34 @@ export default function Sudoku() {
 
   if (!board || !puzzle || generating) {
     return (
-      <div className="h-screen bg-gray-900 flex items-center justify-center">
-        <p className="text-white text-lg animate-pulse">Generating puzzle...</p>
+      <div className="h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <p className="text-gray-900 dark:text-white text-lg animate-pulse">Generating puzzle...</p>
       </div>
     );
   }
 
   return (
-    <div className="h-screen bg-gray-900 flex flex-col items-center justify-center p-2 overflow-hidden select-none">
+    <div className="h-screen bg-gray-50 dark:bg-gray-900 flex flex-col items-center justify-center p-2 overflow-hidden select-none">
       {/* Header */}
-      <h1 className="text-xl sm:text-2xl font-bold text-white mb-2">Sudoku</h1>
+      <div className="flex items-center gap-3 mb-2">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Sudoku</h1>
+        <button
+          onClick={toggleDarkMode}
+          className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+          aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+          title={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+        >
+          {darkMode ? (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          ) : (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          )}
+        </button>
+      </div>
 
       {/* Difficulty selector */}
       <div className="flex gap-2 mb-3">
@@ -144,7 +184,7 @@ export default function Sudoku() {
             className={`px-3 py-1 rounded text-xs sm:text-sm font-medium transition-colors ${
               difficulty === d && !won
                 ? "bg-blue-600 text-white"
-                : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+                : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
             }`}
           >
             {d.charAt(0).toUpperCase() + d.slice(1)}
@@ -152,14 +192,14 @@ export default function Sudoku() {
         ))}
         <button
           onClick={() => setHelpEnabled((prev) => !prev)}
-          className="flex items-center gap-2 px-3 py-1 rounded text-xs sm:text-sm font-medium text-gray-300"
+          className="flex items-center gap-2 px-3 py-1 rounded text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300"
           aria-label={helpEnabled ? "Disable help" : "Enable help"}
           title={helpEnabled ? "Help: ON – errors are highlighted" : "Help: OFF – no error feedback"}
         >
           <span>Help</span>
           <span
             className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
-              helpEnabled ? "bg-green-600" : "bg-gray-600"
+              helpEnabled ? "bg-green-600" : "bg-gray-300 dark:bg-gray-600"
             }`}
           >
             <span
@@ -172,7 +212,7 @@ export default function Sudoku() {
       </div>
 
       {/* Board */}
-      <div className="grid grid-cols-9 border-2 border-gray-400 rounded overflow-hidden">
+      <div className="grid grid-cols-9 border-2 border-gray-400 dark:border-gray-400 rounded overflow-hidden">
         {board.map((row, rowIdx) =>
           row.map((cell, colIdx) => {
             const isGiven = puzzle[rowIdx][colIdx] !== null;
@@ -182,20 +222,20 @@ export default function Sudoku() {
             const sameNum = isSameNumber(rowIdx, colIdx);
             const hasError = errors.has(`${rowIdx}-${colIdx}`);
 
-            let bg = "bg-gray-800";
-            if (isSelected) bg = "bg-blue-700";
-            else if (sameNum) bg = "bg-blue-900";
-            else if (highlighted) bg = "bg-gray-700";
+            let bg = "bg-white dark:bg-gray-800";
+            if (isSelected) bg = "bg-blue-500 dark:bg-blue-700";
+            else if (sameNum) bg = "bg-blue-100 dark:bg-blue-900";
+            else if (highlighted) bg = "bg-gray-100 dark:bg-gray-700";
 
             // Box borders
             const borderRight =
               colIdx % 3 === 2 && colIdx < 8
-                ? "border-r-2 border-r-gray-400"
-                : "border-r border-r-gray-700";
+                ? "border-r-2 border-r-gray-400 dark:border-r-gray-400"
+                : "border-r border-r-gray-300 dark:border-r-gray-700";
             const borderBottom =
               rowIdx % 3 === 2 && rowIdx < 8
-                ? "border-b-2 border-b-gray-400"
-                : "border-b border-b-gray-700";
+                ? "border-b-2 border-b-gray-400 dark:border-b-gray-400"
+                : "border-b border-b-gray-300 dark:border-b-gray-700";
 
             return (
               <button
@@ -207,7 +247,7 @@ export default function Sudoku() {
                   text-sm sm:text-lg font-semibold
                   transition-colors
                   ${bg} ${borderRight} ${borderBottom}
-                  ${isGiven ? "text-white" : hasError && helpEnabled ? "text-red-400" : "text-blue-300"}
+                  ${isGiven ? "text-gray-900 dark:text-white" : hasError && helpEnabled ? "text-red-500 dark:text-red-400" : "text-blue-600 dark:text-blue-300"}
                   ${!isGiven && !won ? "cursor-pointer" : ""}
                 `}
                 aria-label={`Cell row ${rowIdx + 1} column ${colIdx + 1}${cell ? ` value ${cell}` : " empty"}`}
@@ -226,14 +266,14 @@ export default function Sudoku() {
             <button
               key={num}
               onClick={() => handleNumberInput(num)}
-              className="w-[32px] h-[40px] sm:w-[40px] sm:h-[48px] bg-gray-700 hover:bg-gray-600 active:bg-gray-500 text-white font-bold rounded text-sm sm:text-lg transition-colors"
+              className="w-[32px] h-[40px] sm:w-[40px] sm:h-[48px] bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 active:bg-gray-400 dark:active:bg-gray-500 text-gray-900 dark:text-white font-bold rounded text-sm sm:text-lg transition-colors"
             >
               {num}
             </button>
           ))}
           <button
             onClick={handleErase}
-            className="w-[32px] h-[40px] sm:w-[40px] sm:h-[48px] bg-red-900 hover:bg-red-800 active:bg-red-700 text-white font-bold rounded text-sm sm:text-lg transition-colors"
+            className="w-[32px] h-[40px] sm:w-[40px] sm:h-[48px] bg-red-100 dark:bg-red-900 hover:bg-red-200 dark:hover:bg-red-800 active:bg-red-300 dark:active:bg-red-700 text-red-700 dark:text-white font-bold rounded text-sm sm:text-lg transition-colors"
             aria-label="Erase"
           >
             ✕
@@ -243,11 +283,11 @@ export default function Sudoku() {
 
       {/* Win state */}
       {won && (
-        <div className="mt-6 py-4 px-6 text-center rounded-xl bg-gray-800/80 border border-yellow-500/30">
-          <p className="text-2xl font-bold text-yellow-400 mb-1 animate-pulse">
+        <div className="mt-6 py-4 px-6 text-center rounded-xl bg-white/90 dark:bg-gray-800/80 border border-yellow-500/30">
+          <p className="text-2xl font-bold text-yellow-500 dark:text-yellow-400 mb-1 animate-pulse">
             🎉 Well done!
           </p>
-          <p className="text-sm text-gray-300 mb-3">
+          <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
             You crushed the {difficulty} puzzle. Ready for another?
           </p>
           <button
@@ -265,11 +305,11 @@ export default function Sudoku() {
           href="https://github.com/geea-develop/sudoku/issues/new?template=bug_report.yml"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-gray-500 hover:text-gray-300 text-xs underline"
+          className="text-gray-500 hover:text-gray-400 dark:hover:text-gray-300 text-xs underline"
         >
           Report Bug
         </a>
-        <span className="text-gray-700 text-[10px]">
+        <span className="text-gray-400 dark:text-gray-700 text-[10px]">
           build {process.env.NEXT_PUBLIC_BUILD_ID?.slice(0, 7) || "local"} 🎯
         </span>
       </div>
