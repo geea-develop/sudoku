@@ -202,9 +202,9 @@ export default function Sudoku() {
                 key={`${rowIdx}-${colIdx}`}
                 onClick={() => handleCellClick(rowIdx, colIdx)}
                 className={`
-                  w-[36px] h-[36px] sm:w-[44px] sm:h-[44px]
+                  w-[44px] h-[44px] sm:w-[52px] sm:h-[52px]
                   flex items-center justify-center
-                  text-sm sm:text-lg font-semibold
+                  text-base sm:text-xl font-semibold
                   transition-colors
                   ${bg} ${borderRight} ${borderBottom}
                   ${isGiven ? "text-white" : hasError && helpEnabled ? "text-red-400" : "text-blue-300"}
