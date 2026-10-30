@@ -242,9 +242,9 @@ export default function Sudoku() {
                 key={`${rowIdx}-${colIdx}`}
                 onClick={() => handleCellClick(rowIdx, colIdx)}
                 className={`
-                  w-[36px] h-[36px] sm:w-[44px] sm:h-[44px]
+                  w-[44px] h-[44px] sm:w-[52px] sm:h-[52px]
                   flex items-center justify-center
-                  text-sm sm:text-lg font-semibold
+                  text-base sm:text-xl font-semibold
                   transition-colors
                   ${bg} ${borderRight} ${borderBottom}
                   ${isGiven ? "text-gray-900 dark:text-white" : hasError && helpEnabled ? "text-red-500 dark:text-red-400" : "text-blue-600 dark:text-blue-300"}
@@ -266,14 +266,14 @@ export default function Sudoku() {
             <button
               key={num}
               onClick={() => handleNumberInput(num)}
-              className="w-[32px] h-[40px] sm:w-[40px] sm:h-[48px] bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 active:bg-gray-400 dark:active:bg-gray-500 text-gray-900 dark:text-white font-bold rounded text-sm sm:text-lg transition-colors"
+              className="w-[40px] h-[48px] sm:w-[44px] sm:h-[52px] bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 active:bg-gray-400 dark:active:bg-gray-500 text-gray-900 dark:text-white font-bold rounded text-sm sm:text-lg transition-colors"
             >
               {num}
             </button>
           ))}
           <button
             onClick={handleErase}
-            className="w-[32px] h-[40px] sm:w-[40px] sm:h-[48px] bg-red-100 dark:bg-red-900 hover:bg-red-200 dark:hover:bg-red-800 active:bg-red-300 dark:active:bg-red-700 text-red-700 dark:text-white font-bold rounded text-sm sm:text-lg transition-colors"
+            className="w-[40px] h-[48px] sm:w-[44px] sm:h-[52px] bg-red-100 dark:bg-red-900 hover:bg-red-200 dark:hover:bg-red-800 active:bg-red-300 dark:active:bg-red-700 text-red-700 dark:text-white font-bold rounded text-sm sm:text-lg transition-colors"
             aria-label="Erase"
           >
             ✕
