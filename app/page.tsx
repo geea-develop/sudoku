@@ -212,7 +212,7 @@ export default function Sudoku() {
       </div>
 
       {/* Board */}
-      <div className="grid grid-cols-9 border-2 border-gray-400 dark:border-gray-400 rounded overflow-hidden">
+      <div className="grid grid-cols-9 border-2 border-gray-400 dark:border-gray-400 rounded overflow-hidden w-full max-w-[468px]">
         {board.map((row, rowIdx) =>
           row.map((cell, colIdx) => {
             const isGiven = puzzle[rowIdx][colIdx] !== null;
@@ -242,7 +242,7 @@ export default function Sudoku() {
                 key={`${rowIdx}-${colIdx}`}
                 onClick={() => handleCellClick(rowIdx, colIdx)}
                 className={`
-                  w-[44px] h-[44px] sm:w-[52px] sm:h-[52px]
+                  w-full aspect-square
                   flex items-center justify-center
                   text-base sm:text-xl font-semibold
                   transition-colors
@@ -261,19 +261,19 @@ export default function Sudoku() {
 
       {/* Number pad */}
       {!won && (
-        <div className="flex gap-1 sm:gap-2 mt-3">
+        <div className="flex gap-1 mt-3 w-full max-w-[468px]">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
             <button
               key={num}
               onClick={() => handleNumberInput(num)}
-              className="w-[40px] h-[48px] sm:w-[44px] sm:h-[52px] bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 active:bg-gray-400 dark:active:bg-gray-500 text-gray-900 dark:text-white font-bold rounded text-sm sm:text-lg transition-colors"
+              className="flex-1 h-12 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 active:bg-gray-400 dark:active:bg-gray-500 text-gray-900 dark:text-white font-bold rounded text-sm sm:text-lg transition-colors"
             >
               {num}
             </button>
           ))}
           <button
             onClick={handleErase}
-            className="w-[40px] h-[48px] sm:w-[44px] sm:h-[52px] bg-red-100 dark:bg-red-900 hover:bg-red-200 dark:hover:bg-red-800 active:bg-red-300 dark:active:bg-red-700 text-red-700 dark:text-white font-bold rounded text-sm sm:text-lg transition-colors"
+            className="flex-1 h-12 bg-red-100 dark:bg-red-900 hover:bg-red-200 dark:hover:bg-red-800 active:bg-red-300 dark:active:bg-red-700 text-red-700 dark:text-white font-bold rounded text-sm sm:text-lg transition-colors"
             aria-label="Erase"
           >
             ✕
