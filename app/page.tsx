@@ -181,7 +181,7 @@ export default function Sudoku() {
           <button
             key={d}
             onClick={() => newGame(d)}
-            className={`px-3 py-1 rounded text-xs sm:text-sm font-medium transition-colors ${
+            className={`px-3 py-1 rounded min-h-[44px] sm:min-h-0 text-xs sm:text-sm font-medium transition-colors ${
               difficulty === d && !won
                 ? "bg-blue-600 text-white"
                 : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
@@ -192,7 +192,7 @@ export default function Sudoku() {
         ))}
         <button
           onClick={() => setHelpEnabled((prev) => !prev)}
-          className="flex items-center gap-2 px-3 py-1 rounded text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300"
+          className="flex items-center gap-2 px-3 py-1 rounded min-h-[44px] sm:min-h-0 text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300"
           aria-label={helpEnabled ? "Disable help" : "Enable help"}
           title={helpEnabled ? "Help: ON – errors are highlighted" : "Help: OFF – no error feedback"}
         >
